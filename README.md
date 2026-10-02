@@ -43,3 +43,9 @@ The `Provider`, `ProviderAccount` and `Booking` classes are database records. Th
 ## Current boundary
 
 This is a **local two-sided demo**, not a live marketplace. Provider status changes are visible on the dashboard, but the customer is not emailed; there is no customer sign-in, provider verification, payment or production deployment. Keep the local demo database out of GitHub. A later milestone can add customer updates, provider editing, and deployment configuration.
+
+## Screenshots
+
+![Home page](screenshots/home.png)
+![Service search](screenshots/search.png)
+![Provider dashboard](screenshots/dashboard.png)
