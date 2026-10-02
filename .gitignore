@@ -1,0 +1,5 @@
+target/
+autofind-db*
+.idea/
+.vscode/
+*.log

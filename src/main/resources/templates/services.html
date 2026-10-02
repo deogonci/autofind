@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Explore services | Auto Find</title><link rel="stylesheet" th:href="@{/css/site.css}"></head>
+<body><div th:replace="~{layout :: nav}"></div>
+<main class="shell inner-page">
+    <div class="page-intro"><span class="section-number">AUTO FIND / SERVICES</span><h1>Find your next <em>go-to.</em></h1><p>Search by service and location. Every listing here is fictional demo data.</p></div>
+    <form class="search-bar search-bar-inner" th:action="@{/services}" method="get">
+        <label><span>SERVICE</span><select name="category"><option value="">All services</option><option th:each="item : ${categories}" th:value="${item}" th:text="${item.label}" th:selected="${item == category}"></option></select></label>
+        <label><span>LOCATION</span><input type="search" name="area" placeholder="Town or county" th:value="${area}"></label>
+        <button type="submit">Update search <span>↗</span></button>
+    </form>
+    <div class="results-meta"><strong th:text="${#lists.size(results) + ' services found'}">5 services found</strong><span>Browse local example providers</span></div>
+    <div class="card-grid results-grid" th:if="${!#lists.isEmpty(results)}">
+        <a class="provider-card" th:each="provider, iter : ${results}" th:href="@{/services/{id}(id=${provider.id})}">
+            <div class="card-art" th:classappend="' art-' + ${(iter.index % 3) + 1}"><span class="art-category" th:text="${provider.category.label}">Service</span><span class="art-monogram" th:text="${#strings.substring(provider.name, 0, 1)}">A</span></div>
+            <div class="card-body"><div class="card-location"><span class="location-dot"></span><span th:text="${provider.town + ', ' + provider.county}">Lucan, Dublin</span><span class="demo-tag">DEMO</span></div><h2 th:text="${provider.name}">Provider</h2><p th:text="${provider.tagline}">Tagline</p><div class="card-bottom"><span>From <strong th:text="${'€' + provider.priceFrom}">€65</strong></span><span class="circle-arrow">↗</span></div></div>
+        </a>
+    </div>
+    <div class="empty-state" th:if="${#lists.isEmpty(results)}"><span>NO MATCHES</span><h2>Nothing in that lane yet.</h2><p>Try a different service or search for Dublin or Kildare.</p><a class="button button-dark" th:href="@{/services}">Clear search ↗</a></div>
+</main><div th:replace="~{layout :: footer}"></div></body></html>

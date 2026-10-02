@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="site-header" th:fragment="nav">
+    <div class="shell nav-inner">
+        <a class="brand" th:href="@{/}" aria-label="Auto Find home"><span class="brand-mark">AF</span><span>auto<span class="brand-accent">find</span></span></a>
+        <nav aria-label="Main navigation">
+            <a th:href="@{/services}">Browse services</a>
+            <a href="/#how-it-works">How it works</a>
+            <a th:href="@{/providers/register}">List your service</a>
+            <a th:href="@{/provider/dashboard}">Provider portal</a>
+        </nav>
+        <a class="nav-cta" th:href="@{/services}">Find a service <span aria-hidden="true">↗</span></a>
+    </div>
+</header>
+<footer class="site-footer" th:fragment="footer">
+    <div class="shell footer-inner"><strong>auto<span class="brand-accent">find</span></strong><span>Made for finding local car care. Demo listings only.</span><span>Java · Spring Boot</span></div>
+</footer>
+</body>
+</html>
