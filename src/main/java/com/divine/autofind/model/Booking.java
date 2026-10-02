@@ -36,7 +36,8 @@ public class Booking {
     @JoinColumn(name = "provider_id")
     private Provider provider;
 
-    protected Booking() { }
+    protected Booking() {
+    }
 
     public Booking(Provider provider, String customerName, String email,
                    LocalDate preferredDate, String notes) {
@@ -47,14 +48,43 @@ public class Booking {
         this.notes = notes;
     }
 
-    public Long getId() { return id; }
-    public String getReference() { return reference; }
-    public String getCustomerName() { return customerName; }
-    public String getEmail() { return email; }
-    public LocalDate getPreferredDate() { return preferredDate; }
-    public String getNotes() { return notes; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public BookingStatus getStatus() { return status == null ? BookingStatus.REQUESTED : status; }
-    public void setStatus(BookingStatus status) { this.status = status; }
-    public Provider getProvider() { return provider; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalDate getPreferredDate() {
+        return preferredDate;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public BookingStatus getStatus() {
+        return status == null ? BookingStatus.REQUESTED : status;
+    }
+
+    public void setStatus(BookingStatus status) {
+        this.status = status;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
 }

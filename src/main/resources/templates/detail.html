@@ -1,9 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${provider.name + ' | Auto Find'}">Provider | Auto Find</title><link rel="stylesheet" th:href="@{/css/site.css}"></head>
-<body><div th:replace="~{layout :: nav}"></div>
-<main class="shell inner-page detail-page">
-    <a class="back-link" th:href="@{/services}">← Back to services</a>
-    <div class="detail-layout"><div><div class="detail-art"><span th:text="${provider.category.label}">Service</span><strong th:text="${#strings.substring(provider.name, 0, 1)}">A</strong><small>EXAMPLE PROVIDER</small></div><div class="detail-description"><span class="section-number">ABOUT THIS SERVICE</span><h2>What they do.</h2><p th:text="${provider.description}">Description</p></div></div>
-    <aside class="detail-panel"><span class="eyebrow small">LOCAL CAR CARE / DEMO LISTING</span><h1 th:text="${provider.name}">Provider</h1><p class="detail-tagline" th:text="${provider.tagline}">Tagline</p><div class="detail-info"><div><span>SERVICE</span><strong th:text="${provider.category.label}">Detailing</strong></div><div><span>AREA</span><strong th:text="${provider.town + ', ' + provider.county}">Dublin</strong></div><div><span>STARTING FROM</span><strong th:text="${'€' + provider.priceFrom}">€65</strong></div></div><a class="button button-accent full-width" th:href="@{/services/{id}/request(id=${provider.id})}">Request a booking <span>↗</span></a><p class="fine-print">Demo only. No real provider will receive a request.</p></aside></div>
-</main><div th:replace="~{layout :: footer}"></div></body></html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title th:text="${provider.name + ' | Auto Find'}">Provider | Auto Find</title>
+        <link rel="stylesheet" th:href="@{/css/site.css}">
+    </head>
+    <body>
+        <div th:replace="~{layout :: nav}"></div>
+        <main class="shell inner-page detail-page">
+            <a class="back-link" th:href="@{/services}">← Back to services</a>
+            <div class="detail-layout">
+                <div>
+                    <div class="detail-art">
+                        <span th:text="${provider.category.label}">Service</span>
+                        <strong th:text="${#strings.substring(provider.name, 0, 1)}">A</strong>
+                        <small>EXAMPLE PROVIDER</small>
+                    </div>
+                    <div class="detail-description">
+                        <span class="section-number">ABOUT THIS SERVICE</span>
+                        <h2>What they do.</h2>
+                        <p th:text="${provider.description}">Description</p>
+                    </div>
+                </div>
+                <aside class="detail-panel">
+                    <span class="eyebrow small">LOCAL CAR CARE / DEMO LISTING</span>
+                    <h1 th:text="${provider.name}">Provider</h1>
+                    <p class="detail-tagline" th:text="${provider.tagline}">Tagline</p>
+                    <div class="detail-info">
+                        <div>
+                            <span>SERVICE</span>
+                            <strong th:text="${provider.category.label}">Detailing</strong>
+                        </div>
+                        <div>
+                            <span>AREA</span>
+                            <strong th:text="${provider.town + ', ' + provider.county}">Dublin</strong>
+                        </div>
+                        <div>
+                            <span>STARTING FROM</span>
+                            <strong th:text="${'€' + provider.priceFrom}">€65</strong>
+                        </div>
+                    </div>
+                    <a class="button button-accent full-width" th:href="@{/services/{id}/request(id=${provider.id})}">Request a booking <span>↗</span>
+                    </a>
+                    <p class="fine-print">Demo only. No real provider will receive a request.</p>
+                </aside>
+            </div>
+        </main>
+        <div th:replace="~{layout :: footer}"></div>
+    </body>
+</html>

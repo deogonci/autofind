@@ -39,7 +39,8 @@ public class Provider {
     @NotNull
     private BigDecimal priceFrom;
 
-    protected Provider() { }
+    protected Provider() {
+    }
 
     public Provider(String name, ServiceCategory category, String town,
                     String county, String tagline, String description, BigDecimal priceFrom) {
@@ -52,12 +53,35 @@ public class Provider {
         this.priceFrom = priceFrom;
     }
 
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public ServiceCategory getCategory() { return category; }
-    public String getTown() { return town; }
-    public String getCounty() { return county; }
-    public String getTagline() { return tagline; }
-    public String getDescription() { return description; }
-    public BigDecimal getPriceFrom() { return priceFrom; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ServiceCategory getCategory() {
+        return category;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public String getTagline() {
+        return tagline;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public BigDecimal getPriceFrom() {
+        return priceFrom;
+    }
 }

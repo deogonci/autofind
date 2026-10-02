@@ -18,12 +18,12 @@ import java.security.Principal;
 
 @Controller
 public class ProviderPortalController {
-    private final ProviderAccountService accounts;
-    private final BookingService bookings;
+    private final ProviderAccountService accountService;
+    private final BookingService bookingService;
 
-    public ProviderPortalController(ProviderAccountService accounts, BookingService bookings) {
-        this.accounts = accounts;
-        this.bookings = bookings;
+    public ProviderPortalController(ProviderAccountService accountService, BookingService bookingService) {
+        this.accountService = accountService;
+        this.bookingService = bookingService;
     }
 
     @GetMapping("/providers/register")
@@ -35,18 +35,19 @@ public class ProviderPortalController {
 
     @PostMapping("/providers/register")
     public String saveRegistration(@Valid @ModelAttribute("registration") ProviderRegistrationForm form,
-                                   BindingResult errors, Model model) {
+                                   BindingResult errors,
+                                   Model model) {
         if (form.getPassword() != null && !form.getPassword().equals(form.getConfirmPassword())) {
             errors.rejectValue("confirmPassword", "mismatch", "Passwords do not match");
         }
-        if (accounts.emailExists(form.getEmail())) {
+        if (accountService.emailExists(form.getEmail())) {
             errors.rejectValue("email", "duplicate", "That email is already registered");
         }
         if (errors.hasErrors()) {
             model.addAttribute("categories", ServiceCategory.values());
             return "register";
         }
-        accounts.register(form);
+        accountService.register(form);
         return "redirect:/login?registered";
     }
 
@@ -57,9 +58,9 @@ public class ProviderPortalController {
 
     @GetMapping("/provider/dashboard")
     public String dashboard(Principal principal, Model model) {
-        var account = accounts.getByEmail(principal.getName());
+        var account = accountService.getByEmail(principal.getName());
         model.addAttribute("provider", account.getProvider());
-        model.addAttribute("bookings", bookings.forProvider(account.getProvider().getId()));
+        model.addAttribute("bookings", bookingService.forProvider(account.getProvider().getId()));
         return "dashboard";
     }
 
@@ -67,8 +68,8 @@ public class ProviderPortalController {
     public String updateStatus(@PathVariable Long id,
                                @RequestParam BookingStatus status,
                                Principal principal) {
-        var account = accounts.getByEmail(principal.getName());
-        bookings.updateStatus(id, account.getProvider().getId(), status);
+        var account = accountService.getByEmail(principal.getName());
+        bookingService.updateStatus(id, account.getProvider().getId(), status);
         return "redirect:/provider/dashboard";
     }
 }

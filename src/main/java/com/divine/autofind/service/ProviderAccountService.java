@@ -16,32 +16,33 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class ProviderAccountService {
-    private final ProviderAccountRepository accounts;
-    private final ProviderRepository providers;
-    private final PasswordEncoder passwords;
+    private final ProviderAccountRepository accountRepository;
+    private final ProviderRepository providerRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public ProviderAccountService(ProviderAccountRepository accounts,
-                                  ProviderRepository providers, PasswordEncoder passwords) {
-        this.accounts = accounts;
-        this.providers = providers;
-        this.passwords = passwords;
+    public ProviderAccountService(ProviderAccountRepository accountRepository,
+                                  ProviderRepository providerRepository,
+                                  PasswordEncoder passwordEncoder) {
+        this.accountRepository = accountRepository;
+        this.providerRepository = providerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public boolean emailExists(String email) {
-        return email != null && accounts.existsByEmailIgnoreCase(email.trim());
+        return email != null && accountRepository.existsByEmailIgnoreCase(email.trim());
     }
 
     @Transactional
     public void register(ProviderRegistrationForm form) {
         String email = form.getEmail().trim().toLowerCase(Locale.ROOT);
-        Provider provider = providers.save(new Provider(form.getName().trim(),
+        Provider provider = providerRepository.save(new Provider(form.getName().trim(),
                 form.getCategory(), form.getTown().trim(), form.getCounty().trim(),
                 form.getTagline().trim(), form.getDescription().trim(), form.getPriceFrom()));
-        accounts.save(new ProviderAccount(email, passwords.encode(form.getPassword()), provider));
+        accountRepository.save(new ProviderAccount(email, passwordEncoder.encode(form.getPassword()), provider));
     }
 
     public ProviderAccount getByEmail(String email) {
-        return accounts.findByEmailIgnoreCase(email)
+        return accountRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Provider not found"));
     }
 }

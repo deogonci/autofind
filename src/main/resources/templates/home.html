@@ -1,52 +1,147 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Auto Find — local car care, found</title>
-    <link rel="stylesheet" th:href="@{/css/site.css}">
-</head>
-<body>
-<div th:replace="~{layout :: nav}"></div>
-<main>
-    <section class="hero shell">
-        <div class="hero-copy">
-            <div class="eyebrow"><span class="eyebrow-line"></span> YOUR CAR, SORTED</div>
-            <h1>Good help for <em>whatever</em> your car needs.</h1>
-            <p>Find car services near you, compare the essentials, and send a request in a few clicks.</p>
-            <div class="hero-actions"><a class="button button-dark" th:href="@{/services}">Explore services <span>↗</span></a><span class="hero-note">Local search · straightforward requests</span></div>
-        </div>
-        <div class="hero-visual" aria-hidden="true">
-            <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
-            <div class="road-line road-one"></div><div class="road-line road-two"></div>
-            <div class="visual-label label-top">DETAILING <span>↗</span></div>
-            <div class="visual-car">A<span>F</span></div>
-            <div class="visual-label label-bottom">LOCAL, NOT LOST <span>●</span></div>
-        </div>
-    </section>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Auto Find — local car care, found</title>
+        <link rel="stylesheet" th:href="@{/css/site.css}">
+    </head>
+    <body>
+        <div th:replace="~{layout :: nav}"></div>
+        <main>
+            <section class="hero shell">
+                <div class="hero-copy">
+                    <div class="eyebrow">
+                        <span class="eyebrow-line"></span> YOUR CAR, SORTED</div>
+                    <h1>Good help for <em>whatever</em> your car needs.</h1>
+                    <p>Find car services near you, compare the essentials, and send a request in a few clicks.</p>
+                    <div class="hero-actions">
+                        <a class="button button-dark" th:href="@{/services}">Explore services <span>↗</span>
+                        </a>
+                        <span class="hero-note">Local search · straightforward requests</span>
+                    </div>
+                </div>
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="visual-orbit orbit-one"></div>
+                    <div class="visual-orbit orbit-two"></div>
+                    <div class="road-line road-one"></div>
+                    <div class="road-line road-two"></div>
+                    <div class="visual-label label-top">DETAILING <span>↗</span>
+                    </div>
+                    <div class="visual-car">A<span>F</span>
+                    </div>
+                    <div class="visual-label label-bottom">LOCAL, NOT LOST <span>●</span>
+                    </div>
+                </div>
+            </section>
 
-    <section class="search-section shell" aria-labelledby="search-title">
-        <div class="search-heading"><span class="section-number">01 / START HERE</span><h2 id="search-title">What does your car need?</h2></div>
-        <form class="search-bar" th:action="@{/services}" method="get">
-            <label><span>SERVICE</span><select name="category"><option value="">All services</option><option th:each="item : ${categories}" th:value="${item}" th:text="${item.label}"></option></select></label>
-            <label><span>LOCATION</span><input type="search" name="area" placeholder="Town or county, e.g. Lucan"></label>
-            <button type="submit">Search services <span aria-hidden="true">↗</span></button>
-        </form>
-        <div class="category-links"><span>Popular:</span><a th:each="item : ${categories}" th:href="@{/services(category=${item})}" th:text="${item.label}"></a></div>
-    </section>
+            <section class="search-section shell" aria-labelledby="search-title">
+                <div class="search-heading">
+                    <span class="section-number">01 / START HERE</span>
+                    <h2 id="search-title">What does your car need?</h2>
+                </div>
+                <form class="search-bar" th:action="@{/services}" method="get">
+                    <label>
+                        <span>SERVICE</span>
+                        <select name="category">
+                            <option value="">All services</option>
+                            <option th:each="item : ${categories}" th:value="${item}" th:text="${item.label}"></option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>LOCATION</span>
+                        <input type="search" name="area" placeholder="Town or county, e.g. Lucan">
+                    </label>
+                    <button type="submit">Search services <span aria-hidden="true">↗</span>
+                    </button>
+                </form>
+                <div class="category-links">
+                    <span>Popular:</span>
+                    <a th:each="item : ${categories}" th:href="@{/services(category=${item})}" th:text="${item.label}"></a>
+                </div>
+            </section>
 
-    <section class="listings-section shell" aria-labelledby="featured-title">
-        <div class="section-top"><div><span class="section-number">02 / EXPLORE</span><h2 id="featured-title">A place to start.</h2><p>Example providers to explore the Auto Find experience.</p></div><a class="text-link" th:href="@{/services}">See all services <span>↗</span></a></div>
-        <div class="card-grid">
-            <a class="provider-card" th:each="provider, iter : ${featured}" th:href="@{/services/{id}(id=${provider.id})}">
-                <div class="card-art" th:classappend="' art-' + ${iter.index + 1}"><span class="art-category" th:text="${provider.category.label}">Service</span><span class="art-monogram" th:text="${#strings.substring(provider.name, 0, 1)}">A</span></div>
-                <div class="card-body"><div class="card-location"><span class="location-dot"></span><span th:text="${provider.town + ', ' + provider.county}">Lucan, Dublin</span><span class="demo-tag">DEMO</span></div><h3 th:text="${provider.name}">Provider</h3><p th:text="${provider.tagline}">Tagline</p><div class="card-bottom"><span>From <strong th:text="${'€' + provider.priceFrom}">€65</strong></span><span class="circle-arrow">↗</span></div></div>
-            </a>
-        </div>
-    </section>
+            <section class="listings-section shell" aria-labelledby="featured-title">
+                <div class="section-top">
+                    <div>
+                        <span class="section-number">02 / EXPLORE</span>
+                        <h2 id="featured-title">A place to start.</h2>
+                        <p>Example providers to explore the Auto Find experience.</p>
+                    </div>
+                    <a class="text-link" th:href="@{/services}">See all services <span>↗</span>
+                    </a>
+                </div>
+                <div class="card-grid">
+                    <a class="provider-card" th:each="provider, iter : ${featured}" th:href="@{/services/{id}(id=${provider.id})}">
+                        <div class="card-art" th:classappend="' art-' + ${iter.index + 1}">
+                            <span class="art-category" th:text="${provider.category.label}">Service</span>
+                            <span class="art-monogram" th:text="${#strings.substring(provider.name, 0, 1)}">A</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-location">
+                                <span class="location-dot"></span>
+                                <span th:text="${provider.town + ', ' + provider.county}">Lucan, Dublin</span>
+                                <span class="demo-tag">DEMO</span>
+                            </div>
+                            <h3 th:text="${provider.name}">Provider</h3>
+                            <p th:text="${provider.tagline}">Tagline</p>
+                            <div class="card-bottom">
+                                <span>From <strong th:text="${'€' + provider.priceFrom}">€65</strong>
+                                </span>
+                                <span class="circle-arrow">↗</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
 
-    <section class="steps-section" id="how-it-works"><div class="shell steps-inner"><div><span class="section-number">03 / HOW IT WORKS</span><h2>Less searching.<br><em>More moving.</em></h2></div><div class="steps-list"><div><span>01</span><div><h3>Search your area</h3><p>Find services by type and town or county.</p></div></div><div><span>02</span><div><h3>Pick a provider</h3><p>See what they offer and their starting price.</p></div></div><div><span>03</span><div><h3>Send a request</h3><p>Choose a date and describe what you need. Demo requests stay on your computer.</p></div></div></div></div></section>
-    <section class="provider-cta"><div class="shell provider-cta-inner"><div><span class="section-number">FOR PROVIDERS</span><h2>Good at what you do?<br><em>Get found.</em></h2><p>Create a listing and manage booking enquiries in your own dashboard.</p></div><a class="button button-dark" th:href="@{/providers/register}">List your service <span>↗</span></a></div></section>
-</main>
-<div th:replace="~{layout :: footer}"></div>
-</body>
+            <section class="steps-section" id="how-it-works">
+                <div class="shell steps-inner">
+                    <div>
+                        <span class="section-number">03 / HOW IT WORKS</span>
+                        <h2>Less searching.<br>
+                            <em>More moving.</em>
+                        </h2>
+                    </div>
+                    <div class="steps-list">
+                        <div>
+                            <span>01</span>
+                            <div>
+                                <h3>Search your area</h3>
+                                <p>Find services by type and town or county.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <span>02</span>
+                            <div>
+                                <h3>Pick a provider</h3>
+                                <p>See what they offer and their starting price.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <span>03</span>
+                            <div>
+                                <h3>Send a request</h3>
+                                <p>Choose a date and describe what you need. Demo requests stay on your computer.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="provider-cta">
+                <div class="shell provider-cta-inner">
+                    <div>
+                        <span class="section-number">FOR PROVIDERS</span>
+                        <h2>Good at what you do?<br>
+                            <em>Get found.</em>
+                        </h2>
+                        <p>Create a listing and manage booking enquiries in your own dashboard.</p>
+                    </div>
+                    <a class="button button-dark" th:href="@{/providers/register}">List your service <span>↗</span>
+                    </a>
+                </div>
+            </section>
+        </main>
+        <div th:replace="~{layout :: footer}"></div>
+    </body>
 </html>

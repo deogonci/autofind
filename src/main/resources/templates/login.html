@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Provider sign in | Auto Find</title><link rel="stylesheet" th:href="@{/css/site.css}"></head>
-<body><div th:replace="~{layout :: nav}"></div>
-<main class="shell inner-page login-layout"><div class="form-intro"><span class="section-number">PROVIDER PORTAL</span><h1>Back in<br><em>the driver's seat.</em></h1><p>Sign in to view enquiries for your own service and update their status.</p><a class="text-link" th:href="@{/providers/register}">New here? List your service ↗</a></div>
-    <form class="booking-form" th:action="@{/login}" method="post"><span class="section-number">WELCOME BACK</span><h2>Sign in.</h2><p class="form-notice" th:if="${param.registered}">Account created. Sign in to open your dashboard.</p><p class="form-error" th:if="${param.error}">Email or password was incorrect.</p><p class="form-notice" th:if="${param.logout}">You have signed out.</p>
-        <label for="username">Email address</label><input id="username" name="username" type="email" autocomplete="username" required placeholder="you@business.ie">
-        <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required>
-        <button class="button button-accent full-width" type="submit">Sign in <span>↗</span></button>
-    </form>
-</main><div th:replace="~{layout :: footer}"></div></body></html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Provider sign in | Auto Find</title>
+        <link rel="stylesheet" th:href="@{/css/site.css}">
+    </head>
+    <body>
+        <div th:replace="~{layout :: nav}"></div>
+        <main class="shell inner-page login-layout">
+            <div class="form-intro">
+                <span class="section-number">PROVIDER PORTAL</span>
+                <h1>Back in<br>
+                    <em>the driver's seat.</em>
+                </h1>
+                <p>Sign in to view enquiries for your own service and update their status.</p>
+                <a class="text-link" th:href="@{/providers/register}">New here? List your service ↗</a>
+            </div>
+            <form class="booking-form" th:action="@{/login}" method="post">
+                <span class="section-number">WELCOME BACK</span>
+                <h2>Sign in.</h2>
+                <p class="form-notice" th:if="${param.registered}">Account created. Sign in to open your dashboard.</p>
+                <p class="form-error" th:if="${param.error}">Email or password was incorrect.</p>
+                <p class="form-notice" th:if="${param.logout}">You have signed out.</p>
+                <label for="username">Email address</label>
+                <input id="username" name="username" type="email" autocomplete="username" required placeholder="you@business.ie">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" required>
+                <button class="button button-accent full-width" type="submit">Sign in <span>↗</span>
+                </button>
+            </form>
+        </main>
+        <div th:replace="~{layout :: footer}"></div>
+    </body>
+</html>

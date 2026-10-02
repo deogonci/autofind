@@ -18,40 +18,41 @@ import java.time.LocalDate;
 
 @Controller
 public class AutoFindController {
-    private final ProviderService providers;
-    private final BookingService bookings;
+    private final ProviderService providerService;
+    private final BookingService bookingService;
 
-    public AutoFindController(ProviderService providers, BookingService bookings) {
-        this.providers = providers;
-        this.bookings = bookings;
+    public AutoFindController(ProviderService providerService, BookingService bookingService) {
+        this.providerService = providerService;
+        this.bookingService = bookingService;
     }
 
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("categories", ServiceCategory.values());
-        model.addAttribute("featured", providers.search(null, "").stream().limit(3).toList());
+        model.addAttribute("featured", providerService.search(null, "").stream().limit(3).toList());
         return "home";
     }
 
     @GetMapping("/services")
     public String services(@RequestParam(required = false) ServiceCategory category,
-                           @RequestParam(defaultValue = "") String area, Model model) {
+                           @RequestParam(defaultValue = "") String area,
+                           Model model) {
         model.addAttribute("categories", ServiceCategory.values());
         model.addAttribute("category", category);
         model.addAttribute("area", area);
-        model.addAttribute("results", providers.search(category, area));
+        model.addAttribute("results", providerService.search(category, area));
         return "services";
     }
 
     @GetMapping("/services/{id}")
     public String detail(@PathVariable Long id, Model model) {
-        model.addAttribute("provider", providers.get(id));
+        model.addAttribute("provider", providerService.get(id));
         return "detail";
     }
 
     @GetMapping("/services/{id}/request")
     public String requestForm(@PathVariable Long id, Model model) {
-        model.addAttribute("provider", providers.get(id));
+        model.addAttribute("provider", providerService.get(id));
         model.addAttribute("request", new BookingRequestForm());
         model.addAttribute("today", LocalDate.now());
         return "request";
@@ -60,20 +61,21 @@ public class AutoFindController {
     @PostMapping("/services/{id}/request")
     public String submitRequest(@PathVariable Long id,
                                 @Valid @ModelAttribute("request") BookingRequestForm form,
-                                BindingResult errors, Model model) {
+                                BindingResult errors,
+                                Model model) {
         if (errors.hasErrors()) {
-            model.addAttribute("provider", providers.get(id));
+            model.addAttribute("provider", providerService.get(id));
             model.addAttribute("today", LocalDate.now());
             return "request";
         }
-        Booking booking = bookings.request(id, form.getName(), form.getEmail(),
+        Booking booking = bookingService.request(id, form.getName(), form.getEmail(),
                 form.getPreferredDate(), form.getNotes());
         return "redirect:/requests/" + booking.getReference();
     }
 
     @GetMapping("/requests/{reference}")
     public String confirmation(@PathVariable String reference, Model model) {
-        model.addAttribute("booking", bookings.getByReference(reference));
+        model.addAttribute("booking", bookingService.getByReference(reference));
         return "confirmation";
     }
 }

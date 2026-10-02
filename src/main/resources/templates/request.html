@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Request a booking | Auto Find</title><link rel="stylesheet" th:href="@{/css/site.css}"></head>
-<body><div th:replace="~{layout :: nav}"></div>
-<main class="shell inner-page form-layout"><div class="form-intro"><a class="back-link" th:href="@{/services/{id}(id=${provider.id})}">← Back to provider</a><span class="section-number">BOOKING REQUEST / DEMO</span><h1>Let’s get<br><em>it sorted.</em></h1><p th:text="${'Send an example request to ' + provider.name + '. It will be stored locally on this computer.'}">Request details</p><div class="form-provider"><span th:text="${provider.category.label}">Detailing</span><strong th:text="${provider.name}">Provider</strong><small th:text="${provider.town + ', ' + provider.county}">Dublin</small></div></div>
-    <form class="booking-form" th:action="@{/services/{id}/request(id=${provider.id})}" th:object="${request}" method="post"><span class="section-number">YOUR DETAILS</span><h2>Tell us what you need.</h2>
-        <label for="name">Your name</label><input id="name" th:field="*{name}" maxlength="80" placeholder="Your full name" autocomplete="name" required><small class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
-        <label for="email">Email address</label><input id="email" th:field="*{email}" type="email" maxlength="120" placeholder="you@example.com" autocomplete="email" required><small class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
-        <label for="preferredDate">Preferred date</label><input id="preferredDate" th:field="*{preferredDate}" type="date" th:attr="min=${today}" required><small class="form-error" th:if="${#fields.hasErrors('preferredDate')}" th:errors="*{preferredDate}"></small>
-        <label for="notes">What does your car need?</label><textarea id="notes" th:field="*{notes}" rows="4" maxlength="240" placeholder="Tell us a little about the job..."></textarea><small class="form-error" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}"></small>
-        <button class="button button-accent full-width" type="submit">Save demo request <span>↗</span></button><p class="fine-print">This is a local project demo. It does not contact or book a real business.</p>
-    </form>
-</main><div th:replace="~{layout :: footer}"></div></body></html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Request a booking | Auto Find</title>
+        <link rel="stylesheet" th:href="@{/css/site.css}">
+    </head>
+    <body>
+        <div th:replace="~{layout :: nav}"></div>
+        <main class="shell inner-page form-layout">
+            <div class="form-intro">
+                <a class="back-link" th:href="@{/services/{id}(id=${provider.id})}">← Back to provider</a>
+                <span class="section-number">BOOKING REQUEST / DEMO</span>
+                <h1>Let’s get<br>
+                    <em>it sorted.</em>
+                </h1>
+                <p th:text="${'Send an example request to ' + provider.name + '. It will be stored locally on this computer.'}">Request details</p>
+                <div class="form-provider">
+                    <span th:text="${provider.category.label}">Detailing</span>
+                    <strong th:text="${provider.name}">Provider</strong>
+                    <small th:text="${provider.town + ', ' + provider.county}">Dublin</small>
+                </div>
+            </div>
+            <form class="booking-form" th:action="@{/services/{id}/request(id=${provider.id})}" th:object="${request}" method="post">
+                <span class="section-number">YOUR DETAILS</span>
+                <h2>Tell us what you need.</h2>
+                <label for="name">Your name</label>
+                <input id="name" th:field="*{name}" maxlength="80" placeholder="Your full name" autocomplete="name" required>
+                <small class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                <label for="email">Email address</label>
+                <input id="email" th:field="*{email}" type="email" maxlength="120" placeholder="you@example.com" autocomplete="email" required>
+                <small class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                <label for="preferredDate">Preferred date</label>
+                <input id="preferredDate" th:field="*{preferredDate}" type="date" th:attr="min=${today}" required>
+                <small class="form-error" th:if="${#fields.hasErrors('preferredDate')}" th:errors="*{preferredDate}"></small>
+                <label for="notes">What does your car need?</label>
+                <textarea id="notes" th:field="*{notes}" rows="4" maxlength="240" placeholder="Tell us a little about the job..."></textarea>
+                <small class="form-error" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}"></small>
+                <button class="button button-accent full-width" type="submit">Save demo request <span>↗</span>
+                </button>
+                <p class="fine-print">This is a local project demo. It does not contact or book a real business.</p>
+            </form>
+        </main>
+        <div th:replace="~{layout :: footer}"></div>
+    </body>
+</html>

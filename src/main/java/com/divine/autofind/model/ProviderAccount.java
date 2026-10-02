@@ -25,7 +25,8 @@ public class ProviderAccount {
     @JoinColumn(name = "provider_id", unique = true)
     private Provider provider;
 
-    protected ProviderAccount() { }
+    protected ProviderAccount() {
+    }
 
     public ProviderAccount(String email, String passwordHash, Provider provider) {
         this.email = email;
@@ -33,8 +34,19 @@ public class ProviderAccount {
         this.provider = provider;
     }
 
-    public Long getId() { return id; }
-    public String getEmail() { return email; }
-    public String getPasswordHash() { return passwordHash; }
-    public Provider getProvider() { return provider; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
 }
